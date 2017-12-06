@@ -1,0 +1,57 @@
+{
+  "name": "@tadashi/cache-redis",
+  "version": "1.0.0",
+  "description": "Using redis as cache",
+  "main": "index.js",
+  "files": [
+    "LICENSE",
+    "README.md"
+  ],
+  "scripts": {
+    "report": "nyc report --reporter=html",
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "pretest": "xo",
+    "test": "nyc ava -t"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/lagden/cache-redis.git"
+  },
+  "keywords": [
+    "cache",
+    "redis",
+    "json"
+  ],
+  "author": "Thiago Lagden",
+  "license": "MIT",
+  "homepage": "https://github.com/lagden/cache-redis#readme",
+  "bugs": {
+    "url": "https://github.com/lagden/cache-redis/issues"
+  },
+  "xo": {
+    "envs": [
+      "node"
+    ],
+    "semicolon": false,
+    "rules": {
+      "camelcase": [
+        "error",
+        {
+          "properties": "never"
+        }
+      ],
+      "capitalized-comments": 0
+    }
+  },
+  "dependencies": {
+    "ioredis": "3.2.2",
+    "json-buffer": "3.0.0"
+  },
+  "devDependencies": {
+    "ava": "0.24.0",
+    "coveralls": "3.0.0",
+    "nyc": "11.3.0",
+    "sinon": "4.1.2",
+    "xo": "0.18.2"
+  }
+}
