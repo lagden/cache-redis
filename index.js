@@ -1,7 +1,7 @@
 'use strict'
 
 const JSONB = require('json-buffer')
-const connectRedis = require('./lib/connect-redis')
+const connect = require('./lib/connect')
 
 class Cache {
 	constructor(opts = {}, addresses = '127.0.0.1:6379') {
@@ -11,7 +11,7 @@ class Cache {
 			...opts
 		}
 		this.namespace = `namespace:${options.namespace}`
-		this.redis = connectRedis(options.redis, addresses)
+		this.redis = connect(options.redis, addresses)
 	}
 
 	async get(key) {
