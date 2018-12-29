@@ -86,7 +86,7 @@ test.cb('error', t => {
 test('hash', async t => {
 	const ts = Date.now()
 	const _z = new Cache()
-	await _z.redis.hset('room_id', 'user_id', Date.now())
+	await _z.redis.hset('room_id', 'user_id', ts)
 	const r = await _z.redis.hget('room_id', 'user_id')
 	t.is(Number(r), ts)
 })
