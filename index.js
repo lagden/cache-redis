@@ -1,54 +1,54 @@
 'use strict'
 
 const JSONB = require('json-buffer')
-const Redis = require('ioredis')
+const connectRedis = require('./lib/connect-redis')
 
 class Cache {
-	constructor(opts = {}) {
-		const options = Object.assign({}, {namespace: 'cache'}, opts)
-		this.namespace = `namespace:${opts.namespace}`
-		this.redis = new Redis(Object.assign({}, options.redis))
+	constructor(opts = {}, addresses = '127.0.0.1:6379') {
+		const options = {
+			namespace: 'cache',
+			redis: {},
+			...opts
+		}
+		this.namespace = `namespace:${options.namespace}`
+		this.redis = connectRedis(options.redis, addresses)
 	}
 
-	get(key) {
-		return this.redis.get(key)
-			.then(value => {
-				value = JSONB.parse(value)
-				if (value === undefined || value === null) {
-					return undefined
-				}
-				return value
-			})
+	async get(key) {
+		let value = await this.redis.get(key)
+		value = JSONB.parse(value)
+		if (value === undefined || value === null) {
+			return undefined
+		}
+		return value
 	}
 
-	set(key, value, ...more) {
+	async set(key, value, ...more) {
 		if (typeof value === 'undefined') {
-			return Promise.resolve(undefined)
+			return undefined
 		}
 		const [ttl, opt = 'EX'] = more
 		let args = [key, JSONB.stringify(value)]
 		if (typeof ttl === 'number' && (opt === 'EX' || opt === 'PX')) {
 			args = [...args, opt, ttl]
 		}
-		return this.redis.set(...args)
-			.then(() => this.redis.sadd(this.namespace, key))
+		await this.redis.set(...args)
+		await this.redis.sadd(this.namespace, key)
 	}
 
-	delete(key) {
-		return Promise.all([
+	async delete(key) {
+		const [item] = await Promise.all([
 			this.redis.del(key),
 			this.redis.srem(this.namespace, key)
 		])
-		.then(([item]) => Boolean(item))
+		return Boolean(item)
 	}
 
-	clear() {
-		return this.redis.smembers(this.namespace)
-			.then(keys => {
-				const args = [...keys, this.namespace]
-				return this.redis.del(...args)
-			})
-			.then(() => undefined)
+	async clear() {
+		const keys = await this.redis.smembers(this.namespace)
+		const args = [...keys, this.namespace]
+		await this.redis.del(...args)
+		return undefined
 	}
 }
 

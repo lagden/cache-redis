@@ -1,4 +1,8 @@
 language: node_js
+services:
+  - redis-server
 node_js:
-  - "7.6"
-after_script: npm run coverage
+  - "8"
+  - "10"
+script: "npx xo;npx nyc ava -t"
+after_script: "npm i coveralls nyc;npm run report"
