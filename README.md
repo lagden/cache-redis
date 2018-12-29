@@ -39,10 +39,10 @@ $ npm i -S @tadashi/cache-redis
 
 ### new Cache( \[opts\] \[, addresses \])
 
-Name        | Type                 | Default                            | Descrição
------------ | -------------------- |:----------------------------------:| ------------
-opts        | object               | {namespace: 'cache', redis: {}}    | Configuração do proxy
-addresses   | string               | 127.0.0.1:6379                     | Addresses to connect
+Name        | Type                 | Default                            | Description
+----------- | -------------------- | ---------------------------------- | ------------
+opts        | object               | {namespace: 'cache', redis: {}}    | See bellow
+addresses   | string               | '127.0.0.1:6379'                   | Addresses to connect (separated by commas)
 
 
 #### opts.namespace:String
