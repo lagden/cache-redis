@@ -51,13 +51,13 @@ The namespace is the key for all cache members
 
 #### opts.redis:Object
 
-It is the same configuration options of [ioredis](https://github.com/luin/ioredis/blob/master/API.md)
+These are the same configuration options as [ioredis](https://github.com/luin/ioredis/blob/master/API.md)
 
 ---
 
 ### Cluster
 
-To use `Redis.Cluster`, set addresses separated by commas, example:
+To use `Redis.Cluster`, set addresses separated by commas:
 
 ```js
 const cache = new Cache({}, '127.0.0.1:6379,127.0.0.1:6380,127.0.0.1:6381')
@@ -73,9 +73,9 @@ const Cache = require('@tadashi/cache-redis')
 
 const _cache = new Cache({
   redis: {
-    keyPrefix: 'example'
+    keyPrefix: 'api'
   },
-  namespace: 'api'
+  namespace: 'example'
 })
 
 async function find(key) {
