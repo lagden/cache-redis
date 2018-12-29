@@ -11,7 +11,7 @@
   "scripts": {
     "report": "nyc report --reporter=text-lcov | coveralls",
     "pretest": "xo",
-    "test": "ava"
+    "test": "ava -t"
   },
   "repository": {
     "type": "git",
@@ -20,7 +20,7 @@
   "keywords": [
     "cache",
     "redis",
-    "json"
+    "lib"
   ],
   "engines": {
     "node": ">=8.9.1"

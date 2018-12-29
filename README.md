@@ -71,35 +71,35 @@ const cache = new Cache({}, '127.0.0.1:6379,127.0.0.1:6380,127.0.0.1:6381')
 
 const Cache = require('@tadashi/cache-redis')
 
-const cache = new Cache({
+const _cache = new Cache({
   redis: {
-    keyPrefix: 'chatuser'
+    keyPrefix: 'example'
   },
   namespace: 'api'
 })
 
 async function find(key) {
   try {
-    const fromCache = await cache.get(key)
-    if (fromCache) {
-      return fromCache
+    const cache = await _cache.get(key)
+    if (cache) {
+      return cache
     }
     const result = await getDataFromSomeWhere(key)
-    await cache.set(key, result, 3600, 'PX')
+    await _cache.set(key, result, 3600, 'PX')
     return result
   } catch (err) {
     throw err
   }
 }
 
-find('lagden').then(console.log)
-// => getDataFromSomeWhere
+find('something').then(console.log)
+// => data from getDataFromSomeWhere
 
-find('lagden').then(console.log)
-// => fromCache
+find('something').then(console.log)
+// => data from cache
 ```
 
 
 ## License
 
-MIT © [Thiago Lagden](http://lagden.in)
+MIT © [Thiago Lagden](https://lagden.in)
