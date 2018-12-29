@@ -35,9 +35,36 @@ $ npm i -S @tadashi/cache-redis
 ```
 
 
-## Usage
+## API
 
-The Redis options are the same of [ioredis](https://github.com/luin/ioredis/blob/master/API.md#new-redisport-host-options)
+### new Cache( \[opts\] \[, addresses \])
+
+Name        | Type                 | Default                            | Descrição
+----------- | -------------------- |:----------------------------------:| ------------
+opts        | object               | {namespace: 'cache', redis: {}}    | Configuração do proxy
+addresses   | string               | 127.0.0.1:6379                     | Addresses to connect
+
+
+#### opts.namespace:String
+
+The namespace is the key for all cache members
+
+#### opts.redis:Object
+
+It is the same configuration options of [ioredis](https://github.com/luin/ioredis/blob/master/API.md)
+
+---
+
+### Cluster
+
+To use `Redis.Cluster`, set addresses separated by commas, example:
+
+```js
+const cache = new Cache({}, '127.0.0.1:6379,127.0.0.1:6380,127.0.0.1:6381')
+```
+
+
+## Usage
 
 ```js
 'use strict'
