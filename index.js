@@ -17,9 +17,11 @@ class Cache {
 	async get(key) {
 		let value = await this.redis.get(key)
 		value = JSONB.parse(value)
+
 		if (value === undefined || value === null) {
 			return undefined
 		}
+
 		return value
 	}
 
@@ -27,11 +29,14 @@ class Cache {
 		if (typeof value === 'undefined') {
 			return undefined
 		}
+
 		const [ttl, opt = 'EX'] = more
 		let args = [key, JSONB.stringify(value)]
+
 		if (typeof ttl === 'number' && (opt === 'EX' || opt === 'PX')) {
 			args = [...args, opt, ttl]
 		}
+
 		await this.redis.set(...args)
 		await this.redis.sadd(this.namespace, key)
 	}
