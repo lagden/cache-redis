@@ -47,7 +47,7 @@
     }
   },
   "dependencies": {
-    "ioredis": "4.3.0",
+    "ioredis": "4.9.1",
     "json-buffer": "3.0.1"
   },
   "devDependencies": {
