@@ -4,14 +4,14 @@ const JSONB = require('json-buffer')
 const connect = require('./lib/connect')
 
 class Cache {
-	constructor(opts = {}, addresses = '127.0.0.1:6379') {
+	constructor(opts = {}, addresses = undefined) {
 		const options = {
 			namespace: 'cache',
 			redis: {},
 			...opts
 		}
 		this.namespace = `namespace:${options.namespace}`
-		this.redis = connect(options.redis, addresses)
+		this.redis = connect(addresses, options.redis)
 	}
 
 	async get(key) {
