@@ -1,6 +1,6 @@
 {
   "name": "@tadashi/cache-redis",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "Using redis as cache",
   "main": "index.js",
   "files": [
@@ -47,8 +47,8 @@
     }
   },
   "dependencies": {
-    "ioredis": "4.9.0",
-    "json-buffer": "3.0.1"
+    "@tadashi/jsonb": "1.0.0",
+    "ioredis": "4.9.0"
   },
   "devDependencies": {
     "ava": "1.4.1",
