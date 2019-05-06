@@ -37,16 +37,22 @@ class Cache {
 			args = [...args, opt, ttl]
 		}
 
-		await this.redis.set(...args)
-		await this.redis.sadd(this.namespace, key)
+		const [[, set], [, sadd]] = await this.redis
+			.multi()
+			.set(...args)
+			.sadd(this.namespace, key)
+			.exec()
+
+		return Boolean(set && sadd)
 	}
 
 	async delete(key) {
-		const [item] = await Promise.all([
-			this.redis.del(key),
-			this.redis.srem(this.namespace, key)
-		])
-		return Boolean(item)
+		const [[, del], [, srem]] = await this.redis
+			.multi()
+			.del(key)
+			.srem(this.namespace, key)
+			.exec()
+		return Boolean(del && srem)
 	}
 
 	async clear() {
