@@ -1,27 +1,26 @@
 'use strict'
 
-const JSONB = require('json-buffer')
+const {compress, decompress} = require('@tadashi/jsonb')
 const connect = require('./lib/connect')
 
 class Cache {
-	constructor(opts = {}, addresses = '127.0.0.1:6379') {
+	constructor(opts = {}, addresses = undefined) {
 		const options = {
 			namespace: 'cache',
 			redis: {},
 			...opts
 		}
 		this.namespace = `namespace:${options.namespace}`
-		this.redis = connect(options.redis, addresses)
+		this.redis = connect(addresses, options.redis)
 	}
 
 	async get(key) {
 		let value = await this.redis.get(key)
-		value = JSONB.parse(value)
-
 		if (value === undefined || value === null) {
 			return undefined
 		}
 
+		value = await decompress(value)
 		return value
 	}
 
@@ -30,8 +29,9 @@ class Cache {
 			return undefined
 		}
 
+		const _value = await compress(value)
 		const [ttl, opt = 'EX'] = more
-		let args = [key, JSONB.stringify(value)]
+		let args = [key, _value]
 
 		if (typeof ttl === 'number' && (opt === 'EX' || opt === 'PX')) {
 			args = [...args, opt, ttl]
