@@ -24,17 +24,16 @@ class Cache {
 		return value
 	}
 
-	async set(key, value, ...more) {
+	async set(key, value, expire, ttl) {
 		if (typeof value === 'undefined') {
 			return undefined
 		}
 
 		const _value = await compress(value)
-		const [ttl, opt = 'EX'] = more
 		let args = [key, _value]
 
-		if (typeof ttl === 'number' && (opt === 'EX' || opt === 'PX')) {
-			args = [...args, opt, ttl]
+		if (typeof ttl === 'number' && (expire === 'EX' || expire === 'PX')) {
+			args = [...args, expire, ttl]
 		}
 
 		const [[, set], [, sadd]] = await this.redis

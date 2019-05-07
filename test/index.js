@@ -42,7 +42,7 @@ test('undefined', async t => {
 
 test('ttl', async t => {
 	const _d = new Cache()
-	await _d.set('c', {c: 456}, 1000, 'PX')
+	await _d.set('c', {c: 456}, 'PX', 1000)
 	const {c} = await _d.get('c')
 	t.is(c, 456)
 	await sleep(1200)
