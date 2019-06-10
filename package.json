@@ -51,7 +51,7 @@
     "ioredis": "4.9.5"
   },
   "devDependencies": {
-    "ava": "2.0.0",
+    "ava": "2.1.0",
     "xo": "0.24.0"
   }
 }
