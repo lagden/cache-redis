@@ -47,7 +47,7 @@
     }
   },
   "dependencies": {
-    "@tadashi/jsonb": "1.0.0",
+    "@tadashi/jsonb": "2.0.0",
     "ioredis": "4.14.1"
   },
   "devDependencies": {
