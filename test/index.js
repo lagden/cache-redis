@@ -1,7 +1,7 @@
 'use strict'
 
-import test from 'ava'
-import Cache from '..'
+const test = require('ava')
+const Cache = require('..')
 
 function sleep(t) {
 	return new Promise(resolve => {

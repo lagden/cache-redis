@@ -92,10 +92,10 @@ async function find(key) {
   }
 }
 
-find('something').then(console.log)
+find('foo').then(console.log)
 // => data from getDataFromSomeWhere
 
-find('something').then(console.log)
+find('foo').then(console.log)
 // => data from cache
 ```
 
