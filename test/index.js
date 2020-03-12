@@ -60,6 +60,16 @@ test('ttl EX', async t => {
 	t.is(res, undefined)
 })
 
+test('ttl EX 30', async t => {
+	const _d = new Cache()
+	await _d.set('cc', {c: 456}, 'EX', 30)
+	const {c} = await _d.get('cc')
+	t.is(c, 456)
+	await sleep(2000)
+	const res = await _d.get('cc')
+	t.is(JSON.stringify(res), JSON.stringify({c: 456}))
+})
+
 test('delete', async t => {
 	const _e = new Cache({
 		redis: {
