@@ -40,12 +40,22 @@ test('undefined', async t => {
 	t.is(res, undefined)
 })
 
-test('ttl', async t => {
+test('ttl PX', async t => {
 	const _d = new Cache()
 	await _d.set('c', {c: 456}, 'PX', 1000)
 	const {c} = await _d.get('c')
 	t.is(c, 456)
 	await sleep(1200)
+	const res = await _d.get('c')
+	t.is(res, undefined)
+})
+
+test('ttl EX', async t => {
+	const _d = new Cache()
+	await _d.set('c', {c: 456}, 'EX', 1)
+	const {c} = await _d.get('c')
+	t.is(c, 456)
+	await sleep(2000)
 	const res = await _d.get('c')
 	t.is(res, undefined)
 })

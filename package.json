@@ -1,6 +1,6 @@
 {
   "name": "@tadashi/cache-redis",
-  "version": "4.1.1",
+  "version": "4.1.2",
   "description": "Using redis as cache",
   "main": "index.js",
   "files": [
@@ -43,7 +43,8 @@
           "properties": "never"
         }
       ],
-      "capitalized-comments": 0
+      "capitalized-comments": 0,
+      "unicorn/prevent-abbreviations": 0
     }
   },
   "dependencies": {
@@ -51,7 +52,7 @@
     "ioredis": "4.16.0"
   },
   "devDependencies": {
-    "ava": "3.4.0",
-    "xo": "0.27.2"
+    "ava": "3.5.0",
+    "xo": "0.28.0"
   }
 }
