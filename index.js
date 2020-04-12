@@ -35,7 +35,7 @@ class Cache {
 		let args = [key, _value]
 
 		if (expire === 'EX' || expire === 'PX') {
-			args = [...args, expire, isNaN(_ttl) ? 0 : _ttl]
+			args = [...args, expire, Number.isNaN(_ttl) ? 0 : _ttl]
 		}
 
 		const [[, set], [, sadd]] = await this.redis
