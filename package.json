@@ -10,6 +10,8 @@
   ],
   "scripts": {
     "report": "nyc report --reporter=text-lcov | coveralls",
+    "pretest_cov": "xo",
+    "test_cov": "nyc ava -t",
     "pretest": "xo",
     "test": "ava -t"
   },
@@ -48,11 +50,12 @@
     }
   },
   "dependencies": {
-    "@tadashi/jsonb": "3.0.0",
+    "@tadashi/jsonb": "3.0.1",
     "ioredis": "4.16.2"
   },
   "devDependencies": {
-    "ava": "3.6.0",
-    "xo": "0.29.0"
+    "ava": "3.7.1",
+    "nyc": "15.0.1",
+    "xo": "0.29.1"
   }
 }

@@ -7,7 +7,7 @@
 [![devDependency Status][devDep-img]][devDep]
 
 [![XO code style][xo-img]][xo]
-[![Greenkeeper badge][greenkeeper-img]][greenkeeper]
+[![Snyk badge][snyk-img]][snyk]
 
 [npm-img]:         https://img.shields.io/npm/v/@tadashi/cache-redis.svg
 [npm]:             https://www.npmjs.com/package/@tadashi/cache-redis
@@ -21,8 +21,10 @@
 [devDep]:          https://david-dm.org/lagden/cache-redis#info=devDependencies
 [xo-img]:          https://img.shields.io/badge/code_style-XO-5ed9c7.svg
 [xo]:              https://github.com/sindresorhus/xo
-[greenkeeper-img]: https://badges.greenkeeper.io/lagden/cache-redis.svg
-[greenkeeper]:     https://greenkeeper.io/
+[snyk-img]:        https://snyk.io/test/github/lagden/cache-redis/badge.svg
+[snyk]:            https://snyk.io/test/github/lagden/cache-redis
+
+<!-- https://github.com/<OWNER>/<REPOSITORY>/workflows/<WORKFLOW_NAME>/badge.svg -->
 
 
 Using Redis as cache
