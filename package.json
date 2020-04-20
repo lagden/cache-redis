@@ -9,11 +9,10 @@
     "lib"
   ],
   "scripts": {
-    "report": "nyc report --reporter=text-lcov | coveralls",
-    "pretest_cov": "xo",
-    "test_cov": "nyc ava -t",
     "pretest": "xo",
-    "test": "ava -t"
+    "test": "ava -t",
+    "precoverage": "npm run pretest",
+    "coverage": "nyc --reporter=text-summary --reporter=lcov ava"
   },
   "repository": {
     "type": "git",
