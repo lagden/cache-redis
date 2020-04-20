@@ -98,7 +98,7 @@ test('clear', async t => {
 test.cb('error', t => {
 	const _g = new Cache({redis: {retryStrategy: () => false}}, 'xxx')
 	_g.redis.on('error', error => {
-		t.is(error.code, 'ENOTFOUND')
+		t.regex(error.code, /EAI_AGAIN|ENOTFOUND/)
 		t.end()
 	})
 })
