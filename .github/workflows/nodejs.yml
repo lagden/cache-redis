@@ -35,7 +35,7 @@ jobs:
     - run: npm run test_cov
       env:
         CI: true
-        REDIS: redis:${{ job.services.redis.ports[6379] }}
+        REDIS: 127.0.0.1:${{ job.services.redis.ports[6379] }}
 
     - name: Coveralls
       uses: coverallsapp/github-action@master

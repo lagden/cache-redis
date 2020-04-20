@@ -1,7 +1,7 @@
 # cache-redis
 
 [![NPM version][npm-img]][npm]
-[![Build Status][ci-img]][ci]
+[![Node.js CI][ci-img]][ci]
 [![Coverage Status][coveralls-img]][coveralls]
 [![Dependency Status][dep-img]][dep]
 [![devDependency Status][devDep-img]][devDep]
@@ -11,8 +11,8 @@
 
 [npm-img]:         https://img.shields.io/npm/v/@tadashi/cache-redis.svg
 [npm]:             https://www.npmjs.com/package/@tadashi/cache-redis
-[ci-img]:          https://travis-ci.org/lagden/cache-redis.svg
-[ci]:              https://travis-ci.org/lagden/cache-redis
+[ci-img]:          https://github.com/lagden/cache-redis/workflows/Node.js%20CI/badge.svg
+[ci]:              https://github.com/lagden/cache-redis/actions?query=workflow%3A%22Node.js+CI%22
 [coveralls-img]:   https://coveralls.io/repos/github/lagden/cache-redis/badge.svg?branch=master
 [coveralls]:       https://coveralls.io/github/lagden/cache-redis?branch=master
 [dep-img]:         https://david-dm.org/lagden/cache-redis.svg
@@ -23,8 +23,6 @@
 [xo]:              https://github.com/sindresorhus/xo
 [snyk-img]:        https://snyk.io/test/github/lagden/cache-redis/badge.svg
 [snyk]:            https://snyk.io/test/github/lagden/cache-redis
-
-<!-- https://github.com/<OWNER>/<REPOSITORY>/workflows/<WORKFLOW_NAME>/badge.svg -->
 
 
 Using Redis as cache
