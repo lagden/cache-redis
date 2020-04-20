@@ -13,12 +13,14 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [10.x, 12.x]
+        # node-version: [10.x, 12.x]
+        node-version: [12.x]
 
     services:
       redis:
         image: redis
-        ports: [6379/tcp]
+        ports:
+        - 6379:6379
         options: --entrypoint redis-server
 
     steps:
@@ -33,5 +35,4 @@ jobs:
     - run: npm run report
       env:
         CI: true
-        REDIS_HOST: 127.0.0.1
-        REDIS_PORT: ${{ job.services.redis.ports[6379] }}
+        REDIS: redis:${{ job.services.redis.ports[6379] }}
