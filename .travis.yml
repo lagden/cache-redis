@@ -1,9 +1,0 @@
-language: node_js
-services:
-  - redis-server
-node_js:
-  - "10"
-  - "12"
-before_script: "npm i nyc coveralls"
-script: "npx xo;npx nyc ava -t"
-after_script: "npm run report"
