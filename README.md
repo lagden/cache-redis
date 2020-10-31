@@ -85,7 +85,7 @@ async function find(key) {
       return cache
     }
     const result = await getDataFromSomeWhere(key)
-    await _cache.set(key, result, 3600, 'PX')
+    await _cache.set(key, result, 'PX', 3600)
     return result
   } catch (err) {
     throw err
