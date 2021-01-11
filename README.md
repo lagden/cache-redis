@@ -47,11 +47,12 @@ addresses   | string               | '127.0.0.1:6379'                   | Addres
 
 #### opts.namespace:String
 
-The namespace is the key for all cache members
+The namespace for all cache members
+
 
 #### opts.redis:Object
 
-These are the same configuration options as [ioredis](https://github.com/luin/ioredis/blob/master/API.md)
+See [ioredis](https://github.com/luin/ioredis/blob/master/API.md) options
 
 ---
 
