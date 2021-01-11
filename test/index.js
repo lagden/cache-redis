@@ -70,6 +70,13 @@ test('ttl EX 30', async t => {
 	t.is(JSON.stringify(res), JSON.stringify({c: 456}))
 })
 
+test('ttl isNaN', async t => {
+	const _d = new Cache()
+	await _d.set('nan', 'some data', 'EX', 'XXX')
+	const res = await _d.get('nan')
+	t.is(res, undefined)
+})
+
 test('delete', async t => {
 	const _e = new Cache({
 		redis: {

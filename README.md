@@ -92,14 +92,16 @@ async function find(key) {
   }
 }
 
-find('foo').then(console.log)
-// => data from getDataFromSomeWhere
+(async () => {
+  await find('foo')
+  // => data from getDataFromSomeWhere
 
-find('foo').then(console.log)
-// => data from cache
+  await find('foo')
+  // => data from cache
+})()
 ```
 
 
 ## License
 
-MIT © [Thiago Lagden](https://lagden.in)
+MIT © [Thiago Lagden](https://github.com/lagden)

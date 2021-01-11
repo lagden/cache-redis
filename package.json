@@ -1,12 +1,11 @@
 {
   "name": "@tadashi/cache-redis",
-  "version": "4.2.0",
+  "version": "4.3.0",
   "description": "Using redis as cache",
   "main": "index.js",
   "files": [
     "LICENSE",
-    "README.md",
-    "lib"
+    "README.md"
   ],
   "scripts": {
     "pretest": "xo",
@@ -24,7 +23,7 @@
     "lib"
   ],
   "engines": {
-    "node": ">=8.9.1"
+    "node": ">=12"
   },
   "author": "Thiago Lagden",
   "license": "MIT",
@@ -49,12 +48,15 @@
     }
   },
   "dependencies": {
-    "@tadashi/jsonb": "3.0.1",
-    "ioredis": "4.19.2"
+    "@tadashi/connect-redis": "1.0.0",
+    "@tadashi/jsonb": "3.1.0"
+  },
+  "peerDependencies": {
+    "ioredis": ">= 4.19.4 < 5"
   },
   "devDependencies": {
-    "ava": "3.13.0",
+    "ava": "3.15.0",
     "nyc": "15.1.0",
-    "xo": "0.34.1"
+    "xo": "0.37.1"
   }
 }

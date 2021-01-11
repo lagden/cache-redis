@@ -1,7 +1,7 @@
 'use strict'
 
 const {compress, decompress} = require('@tadashi/jsonb')
-const connect = require('./lib/connect')
+const connect = require('@tadashi/connect-redis')
 
 class Cache {
 	constructor(opts = {}, addresses = undefined) {
@@ -15,7 +15,7 @@ class Cache {
 	}
 
 	async get(key) {
-		let value = await this.redis.get(key)
+		let value = await this.redis.getBuffer(key)
 		if (value === undefined || value === null) {
 			return undefined
 		}
@@ -24,14 +24,18 @@ class Cache {
 		return value
 	}
 
-	async set(key, value, expire, ttl = 0) {
+	async set(key, value, ...opts) {
+		const [
+			expire,
+			ttl = 0
+		] = opts
 		if (typeof value === 'undefined') {
 			return undefined
 		}
 
 		const _ttl = typeof ttl === 'number' ? ttl : Number(ttl)
 
-		const _value = await compress(value)
+		const _value = await compress(value, {base64: false})
 		let args = [key, _value]
 
 		if (expire === 'EX' || expire === 'PX') {
