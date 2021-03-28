@@ -6,11 +6,15 @@ const connect = require('@tadashi/connect-redis')
 class Cache {
 	constructor(opts = {}, addresses = undefined) {
 		const options = {
-			namespace: 'cache',
+			namespace: 'app',
 			redis: {},
 			...opts
 		}
-		this.namespace = `namespace:${options.namespace}`
+
+		options.redis.keyPrefix = opts?.redis?.keyPrefix ?? 'tadashi_cache_redis'
+		options.redis.keyPrefix = `${options.redis.keyPrefix}_${options.namespace}:`
+
+		this.namespace = '@ns'
 		this.redis = connect(addresses, options.redis)
 	}
 
