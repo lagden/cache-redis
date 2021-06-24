@@ -3,8 +3,6 @@
 [![NPM version][npm-img]][npm]
 [![Node.js CI][ci-img]][ci]
 [![Coverage Status][coveralls-img]][coveralls]
-[![Dependency Status][dep-img]][dep]
-[![devDependency Status][devDep-img]][devDep]
 
 [![XO code style][xo-img]][xo]
 [![Snyk badge][snyk-img]][snyk]
@@ -15,10 +13,6 @@
 [ci]:              https://github.com/lagden/cache-redis/actions?query=workflow%3A%22Node.js+CI%22
 [coveralls-img]:   https://coveralls.io/repos/github/lagden/cache-redis/badge.svg?branch=master
 [coveralls]:       https://coveralls.io/github/lagden/cache-redis?branch=master
-[dep-img]:         https://david-dm.org/lagden/cache-redis.svg
-[dep]:             https://david-dm.org/lagden/cache-redis
-[devDep-img]:      https://david-dm.org/lagden/cache-redis/dev-status.svg
-[devDep]:          https://david-dm.org/lagden/cache-redis#info=devDependencies
 [xo-img]:          https://img.shields.io/badge/code_style-XO-5ed9c7.svg
 [xo]:              https://github.com/sindresorhus/xo
 [snyk-img]:        https://snyk.io/test/github/lagden/cache-redis/badge.svg
@@ -37,12 +31,16 @@ $ npm i -S @tadashi/cache-redis
 
 ## API
 
-### new Cache( \[opts\] \[, addresses \])
+### new Cache( \[opts\])
 
 Name        | Type                 | Default                            | Description
 ----------- | -------------------- | ---------------------------------- | ------------
 opts        | object               | {namespace: 'cache', redis: {}}    | See bellow
-addresses   | string               | '127.0.0.1:6379'                   | Addresses to connect (separated by commas)
+
+
+#### opts.addresses:String
+
+Addresses to connect (separated by commas)
 
 
 #### opts.namespace:String
@@ -61,16 +59,14 @@ See [ioredis](https://github.com/luin/ioredis/blob/master/API.md) options
 To use `Redis.Cluster`, set addresses separated by commas:
 
 ```js
-const cache = new Cache({}, '127.0.0.1:6379,127.0.0.1:6380,127.0.0.1:6381')
+const cache = new Cache({addresses: '127.0.0.1:6379,127.0.0.1:6380,127.0.0.1:6381'})
 ```
 
 
 ## Usage
 
 ```js
-'use strict'
-
-const Cache = require('@tadashi/cache-redis')
+import Cache from '@tadashi/cache-redis'
 
 const _cache = new Cache({
   redis: {
@@ -93,13 +89,12 @@ async function find(key) {
   }
 }
 
-(async () => {
-  await find('foo')
-  // => data from getDataFromSomeWhere
 
-  await find('foo')
-  // => data from cache
-})()
+await find('foo')
+// => data from getDataFromSomeWhere
+
+await find('foo')
+// => data from cache
 ```
 
 
