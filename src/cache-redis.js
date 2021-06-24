@@ -40,13 +40,19 @@ class Cache {
 			return
 		}
 
-		const _ttl = typeof ttl === 'number' ? ttl : Number(ttl)
+		let _ttl = typeof ttl === 'number' ? ttl : Number(ttl)
+		_ttl = Number.isNaN(_ttl) ? 0 : _ttl
 
 		const _value = await compress(value, {base64: false})
 		let args = [key, _value]
 
 		if (expire === 'EX' || expire === 'PX') {
-			args = [...args, expire, Number.isNaN(_ttl) ? 0 : _ttl]
+			args = [...args, expire, _ttl]
+		}
+
+		if (expire === 'EXAT' || expire === 'PXAT') {
+			const _time = _ttl + Math.floor(Date.now() / (expire === 'EXAT' ? 1000 : 1))
+			args = [...args, expire, _time]
 		}
 
 		const [[, set], [, sadd]] = await this.redis

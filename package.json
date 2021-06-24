@@ -1,6 +1,6 @@
 {
   "name": "@tadashi/cache-redis",
-  "version": "6.0.0",
+  "version": "6.1.0",
   "description": "Using redis as cache",
   "keywords": [
     "cache",

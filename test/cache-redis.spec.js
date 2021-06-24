@@ -49,32 +49,42 @@ test('primitive', async t => {
 
 test('ttl PX', async t => {
 	const _d = new Cache()
-	await _d.set('d', {d: 789}, 'PX', 1000)
+	await _d.set('d', {d: 789}, 'PX', 1500)
 	const {d} = await _d.get('d')
 	t.is(d, 789)
-	await sleep(1.5)
+	await sleep(2)
 	const res = await _d.get('d')
+	t.is(res, undefined)
+})
+
+test('ttl PXAT', async t => {
+	const _dd = new Cache()
+	await _dd.set('dd', {dd: 789}, 'PXAT', 1500)
+	const {dd} = await _dd.get('dd')
+	t.is(dd, 789)
+	await sleep(2)
+	const res = await _dd.get('dd')
 	t.is(res, undefined)
 })
 
 test('ttl EX', async t => {
 	const _e = new Cache()
-	await _e.set('e', {e: 1011}, 'EX', 1)
+	await _e.set('e', {e: 1011}, 'EX', 2)
 	const {e} = await _e.get('e')
 	t.is(e, 1011)
-	await sleep(1.5)
+	await sleep(3)
 	const res = await _e.get('e')
 	t.is(res, undefined)
 })
 
-test('ttl EX 30', async t => {
+test('ttl EXAT', async t => {
 	const _f = new Cache()
-	await _f.set('f', {f: 1314}, 'EX', 30)
+	await _f.set('f', {f: 1011}, 'EXAT', 2)
 	const {f} = await _f.get('f')
-	t.is(f, 1314)
-	await sleep(2)
+	t.is(f, 1011)
+	await sleep(3)
 	const res = await _f.get('f')
-	t.is(JSON.stringify(res), JSON.stringify({f: 1314}))
+	t.is(res, undefined)
 })
 
 test('ttl isNaN', async t => {
@@ -82,6 +92,10 @@ test('ttl isNaN', async t => {
 	await _g.set('nan', 'some data', 'EX', 'XXX')
 	const res = await _g.get('nan')
 	t.is(res, undefined)
+
+	await _g.set('nan_at', 'some data', 'EXAT', 'XXX')
+	const res_at = await _g.get('nan')
+	t.is(res_at, undefined)
 })
 
 test('delete', async t => {
