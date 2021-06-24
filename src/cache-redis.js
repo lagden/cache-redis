@@ -1,14 +1,17 @@
-'use strict'
-
-const {compress, decompress} = require('@tadashi/jsonb')
-const connect = require('@tadashi/connect-redis')
+import {compress, decompress} from '@tadashi/jsonb'
+import connect from '@tadashi/connect-redis'
 
 class Cache {
-	constructor(opts = {}, addresses = undefined) {
+	constructor(opts = {}) {
+		const {
+			addresses,
+			...others
+		} = opts
+
 		const options = {
 			namespace: 'app',
 			redis: {},
-			...opts
+			...others,
 		}
 
 		options.redis.keyPrefix = opts?.redis?.keyPrefix ?? 'tadashi_cache_redis'
@@ -21,7 +24,7 @@ class Cache {
 	async get(key) {
 		let value = await this.redis.getBuffer(key)
 		if (value === undefined || value === null) {
-			return undefined
+			return
 		}
 
 		value = await decompress(value)
@@ -31,10 +34,10 @@ class Cache {
 	async set(key, value, ...opts) {
 		const [
 			expire,
-			ttl = 0
+			ttl = 0,
 		] = opts
 		if (typeof value === 'undefined') {
-			return undefined
+			return
 		}
 
 		const _ttl = typeof ttl === 'number' ? ttl : Number(ttl)
@@ -68,8 +71,7 @@ class Cache {
 		const keys = await this.redis.smembers(this.namespace)
 		const args = [...keys, this.namespace]
 		await this.redis.del(...args)
-		return undefined
 	}
 }
 
-module.exports = Cache
+export default Cache

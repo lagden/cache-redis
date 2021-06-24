@@ -1,15 +1,7 @@
-'use strict'
-
-const test = require('ava')
-const Cache = require('..')
-
-function sleep(t) {
-	return new Promise(resolve => {
-		setTimeout(() => {
-			resolve()
-		}, t)
-	})
-}
+import test from 'ava'
+import pEvent from 'p-event'
+import sleep from '@tadashi/sleep'
+import Cache from '../src/cache-redis.js'
 
 async function _clear() {
 	const _m = new Cache()
@@ -43,7 +35,7 @@ test('namespace', async t => {
 
 test('undefined', async t => {
 	const _b = new Cache()
-	await _b.set('b', undefined)
+	await _b.set('b')
 	const res = await _b.get('b')
 	t.is(res, undefined)
 })
@@ -60,7 +52,7 @@ test('ttl PX', async t => {
 	await _d.set('d', {d: 789}, 'PX', 1000)
 	const {d} = await _d.get('d')
 	t.is(d, 789)
-	await sleep(1200)
+	await sleep(1.5)
 	const res = await _d.get('d')
 	t.is(res, undefined)
 })
@@ -70,7 +62,7 @@ test('ttl EX', async t => {
 	await _e.set('e', {e: 1011}, 'EX', 1)
 	const {e} = await _e.get('e')
 	t.is(e, 1011)
-	await sleep(1200)
+	await sleep(1.5)
 	const res = await _e.get('e')
 	t.is(res, undefined)
 })
@@ -80,7 +72,7 @@ test('ttl EX 30', async t => {
 	await _f.set('f', {f: 1314}, 'EX', 30)
 	const {f} = await _f.get('f')
 	t.is(f, 1314)
-	await sleep(2000)
+	await sleep(2)
 	const res = await _f.get('f')
 	t.is(JSON.stringify(res), JSON.stringify({f: 1314}))
 })
@@ -96,8 +88,8 @@ test('delete', async t => {
 	const _h = new Cache({
 		redis: {
 			keyPrefix: 'unitTest',
-			host: 'localhost'
-		}
+			host: 'localhost',
+		},
 	})
 	await _h.set('h', {h: 1516})
 	const {h} = await _h.get('h')
@@ -108,7 +100,7 @@ test('delete', async t => {
 
 test('clear', async t => {
 	const _i = new Cache({
-		redis: {keyPrefix: 'unitTestClear'}
+		redis: {keyPrefix: 'unitTestClear'},
 	})
 	await _i.set('i', {i: 1718})
 	const {i} = await _i.get('i')
@@ -117,12 +109,15 @@ test('clear', async t => {
 	t.is(_clear, undefined)
 })
 
-test.cb('error', t => {
-	const _g = new Cache({redis: {retryStrategy: () => false}}, 'xxx')
-	_g.redis.on('error', error => {
-		t.regex(error.code, /EAI_AGAIN|ENOTFOUND/)
-		t.end()
+test('error', async t => {
+	const _g = new Cache({
+		redis: {
+			retryStrategy: () => false,
+		},
+		addresses: 'xxx',
 	})
+	const error = await pEvent(_g.redis, 'error')
+	t.regex(error.code, /EAI_AGAIN|ENOTFOUND/)
 })
 
 test('hash', async t => {
@@ -133,12 +128,13 @@ test('hash', async t => {
 	t.is(Number(r), ts)
 })
 
-test.cb('cluster', t => {
-	const _x = new Cache({redis: {
-		clusterRetryStrategy: () => false
-	}}, '127.0.0.1:6379,127.0.0.1:6379')
-	_x.redis.on('error', error => {
-		t.is(error.message, 'Failed to refresh slots cache.')
-		t.end()
+test('cluster', async t => {
+	const _x = new Cache({
+		redis: {
+			clusterRetryStrategy: () => false,
+		},
+		addresses: '127.0.0.1:6379,127.0.0.1:6379',
 	})
+	const error = await pEvent(_x.redis, 'error')
+	t.is(error.message, 'Failed to refresh slots cache.')
 })
