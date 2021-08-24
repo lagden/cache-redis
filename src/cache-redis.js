@@ -18,7 +18,7 @@ class Cache {
 		options.redis.keyPrefix = `${options.redis.keyPrefix}_${options.namespace}:`
 
 		this.namespace = '@ns'
-		this.redis = connect(addresses, options.redis)
+		this.redis = connect({...options.redis, addresses})
 	}
 
 	async get(key) {

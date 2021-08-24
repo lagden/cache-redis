@@ -1,5 +1,4 @@
 import test from 'ava'
-import pEvent from 'p-event'
 import sleep from '@tadashi/sleep'
 import Cache from '../src/cache-redis.js'
 
@@ -123,32 +122,10 @@ test('clear', async t => {
 	t.is(_clear, undefined)
 })
 
-test('error', async t => {
-	const _g = new Cache({
-		redis: {
-			retryStrategy: () => false,
-		},
-		addresses: 'xxx',
-	})
-	const error = await pEvent(_g.redis, 'error')
-	t.regex(error.code, /EAI_AGAIN|ENOTFOUND/)
-})
-
 test('hash', async t => {
 	const ts = Date.now()
 	const _z = new Cache()
 	await _z.redis.hset('room_id', 'user_id', ts)
 	const r = await _z.redis.hget('room_id', 'user_id')
 	t.is(Number(r), ts)
-})
-
-test('cluster', async t => {
-	const _x = new Cache({
-		redis: {
-			clusterRetryStrategy: () => false,
-		},
-		addresses: '127.0.0.1:6379,127.0.0.1:6379',
-	})
-	const error = await pEvent(_x.redis, 'error')
-	t.is(error.message, 'Failed to refresh slots cache.')
 })
