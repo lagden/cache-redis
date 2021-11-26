@@ -31,21 +31,11 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Update yarn
-        run: yarn set version berry
-
-      - name: Log yarn version
-        run: yarn --version
-
-      - name: Generate simple .yarnrc.yml
-        run: |
-          echo "nodeLinker: node-modules" >> .yarnrc.yml
-
       - name: Install dependencies
-        run: yarn install
+        run: npm ci
         env:
           CI: true
-      
+
       - name: Run test
         run: npm test
         env:
