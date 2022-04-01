@@ -1,6 +1,6 @@
 {
   "name": "@tadashi/cache-redis",
-  "version": "6.2.0",
+  "version": "6.3.0",
   "description": "Using redis as cache",
   "keywords": [
     "cache",
@@ -32,31 +32,27 @@
     "test": "c8 --reporter=text --reporter=text-summary --reporter=lcov ava --tap"
   },
   "dependencies": {
-    "@tadashi/connect-redis": "2.1.0",
+    "@tadashi/connect-redis": "2.2.0",
     "@tadashi/jsonb": "4.0.0"
   },
   "peerDependencies": {
-    "ioredis": ">= 4.19.4 < 5"
+    "ioredis": ">= 4.19.4 < 6"
   },
   "devDependencies": {
-    "@babel/core": "7.16.0",
-    "@babel/eslint-parser": "7.16.3",
-    "@babel/plugin-syntax-top-level-await": "7.14.5",
-    "@babel/preset-env": "7.16.4",
+    "@babel/core": "7.17.8",
+    "@babel/eslint-parser": "7.17.0",
+    "@babel/preset-env": "7.16.11",
     "@tadashi/sleep": "2.0.1",
-    "ava": "3.15.0",
-    "c8": "7.10.0",
-    "eslint": "8.3.0",
-    "eslint-config-xo": "0.39.0",
-    "eslint-plugin-unicorn": "39.0.0",
-    "ioredis": "4.28.1"
+    "ava": "4.1.0",
+    "c8": "7.11.0",
+    "eslint": "8.12.0",
+    "eslint-config-xo": "0.40.0",
+    "eslint-plugin-unicorn": "41.0.1",
+    "ioredis": "5.0.3"
   },
   "babel": {
     "presets": [
       "@babel/preset-env"
-    ],
-    "plugins": [
-      "@babel/plugin-syntax-top-level-await"
     ]
   }
 }
