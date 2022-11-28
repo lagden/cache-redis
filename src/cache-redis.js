@@ -36,7 +36,7 @@ class Cache {
 			expire,
 			ttl = 0,
 		] = opts
-		if (typeof value === 'undefined') {
+		if (value === undefined) {
 			return
 		}
 
