@@ -40,8 +40,8 @@ class Cache {
 			return
 		}
 
-		let _ttl = typeof ttl === 'number' ? ttl : Number(ttl)
-		_ttl = Number.isNaN(_ttl) ? 0 : _ttl
+		let _ttl = typeof ttl === 'number' ? ttl : globalThis.Number(ttl)
+		_ttl = globalThis.Number.isInteger(_ttl) ? _ttl : 0
 
 		const _value = await compress(value, {base64: false})
 		let args = [key, _value]
@@ -61,7 +61,7 @@ class Cache {
 			.sadd(this.namespace, key)
 			.exec()
 
-		return Boolean(set && sadd)
+		return globalThis.Boolean(set && sadd)
 	}
 
 	async delete(key) {
@@ -70,7 +70,7 @@ class Cache {
 			.del(key)
 			.srem(this.namespace, key)
 			.exec()
-		return Boolean(del && srem)
+		return globalThis.Boolean(del && srem)
 	}
 
 	async clear() {

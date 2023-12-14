@@ -3,18 +3,14 @@
 [![NPM version][npm-img]][npm]
 [![Node.js CI][ci-img]][ci]
 [![Coverage Status][coveralls-img]][coveralls]
-
-[![XO code style][xo-img]][xo]
 [![Snyk badge][snyk-img]][snyk]
 
 [npm-img]:         https://img.shields.io/npm/v/@tadashi/cache-redis.svg
 [npm]:             https://www.npmjs.com/package/@tadashi/cache-redis
-[ci-img]:          https://github.com/lagden/cache-redis/workflows/Node.js%20CI/badge.svg
-[ci]:              https://github.com/lagden/cache-redis/actions?query=workflow%3A%22Node.js+CI%22
-[coveralls-img]:   https://coveralls.io/repos/github/lagden/cache-redis/badge.svg?branch=master
-[coveralls]:       https://coveralls.io/github/lagden/cache-redis?branch=master
-[xo-img]:          https://img.shields.io/badge/code_style-XO-5ed9c7.svg
-[xo]:              https://github.com/sindresorhus/xo
+[ci-img]:          https://github.com/lagden/cache-redis/actions/workflows/nodejs.yml/badge.svg
+[ci]:              https://github.com/lagden/cache-redis/actions/workflows/nodejs.yml
+[coveralls-img]:   https://coveralls.io/repos/github/lagden/cache-redis/badge.svg?branch=main
+[coveralls]:       https://coveralls.io/github/lagden/cache-redis?branch=main
 [snyk-img]:        https://snyk.io/test/github/lagden/cache-redis/badge.svg
 [snyk]:            https://snyk.io/test/github/lagden/cache-redis
 
@@ -25,7 +21,7 @@ Using Redis as cache
 ## Install
 
 ```
-$ npm i -S @tadashi/cache-redis
+$ npm i @tadashi/cache-redis
 ```
 
 
@@ -96,6 +92,11 @@ await find('foo')
 await find('foo')
 // => data from cache
 ```
+
+
+## Donate ❤️
+
+BTC: bc1q7famhuj5f25n6qvlm3sssnymk2qpxrfwpyq7g4
 
 
 ## License
