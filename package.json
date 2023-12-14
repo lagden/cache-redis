@@ -9,6 +9,7 @@
   ],
   "type": "module",
   "main": "src/cache-redis.js",
+  "exports": "./src/cache-redis.js",
   "files": [
     "LICENSE",
     "src"
@@ -29,9 +30,9 @@
   "scripts": {
     "eslint": "eslint --config .eslintrc.yml --ext .js --ignore-path .gitignore .",
     "pretest": "npm run eslint",
-    "docker:rm": "docker kill redis-test; docker rm redis-test",
-    "docker": "docker run -p 6379:6379 --name redis-test -d redis:latest",
-    "test": "c8 --reporter=text --reporter=text-summary --reporter=lcov ava --tap"
+    "docker:rm": "docker kill cache-redis-test; docker rm cache-redis-test",
+    "docker": "docker run -p 6379:6379 --name cache-redis-test -d redis:latest",
+    "test": "c8 --reporter=text --reporter=text-summary --reporter=lcovonly --reporter=cobertura node --test test/*.spec.js"
   },
   "dependencies": {
     "@tadashi/jsonb": "5.0.1"
@@ -42,8 +43,6 @@
   },
   "devDependencies": {
     "@tadashi/connect-redis": "2.4.0",
-    "@tadashi/sleep": "2.0.1",
-    "ava": "6.0.1",
     "c8": "8.0.1",
     "eslint": "8.55.0",
     "eslint-config-xo": "0.43.1",
