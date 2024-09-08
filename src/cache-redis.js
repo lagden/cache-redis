@@ -31,7 +31,7 @@ class Cache {
 	 * Retrieve a value from the cache.
 	 *
 	 * @param {string} key - The key of the item to retrieve.
-	 * @returns {Promise<*>} The decompressed value retrieved from the cache, or undefined if not found.
+	 * @returns {Promise<*>} A promise that resolves with the decompressed value retrieved from the cache, or undefined if not found.
 	 */
 	async get(key) {
 		let value = await this.redis.getBuffer(key)
@@ -48,9 +48,9 @@ class Cache {
 	 *
 	 * @param {string} key - The key under which the value will be stored.
 	 * @param {*} value - The value to store in the cache.
-	 * @param {string} [expire] - Expiration mode ('EX', 'PX', 'EXAT', 'PXAT').
-	 * @param {number} [ttl=0] - The time-to-live for the cache entry.
-	 * @returns {Promise<boolean>} True if the operation succeeded, otherwise false.
+	 * @param {string} [expire] - Optional expiration mode ('EX', 'PX', 'EXAT', 'PXAT').
+	 * @param {number} [ttl=0] - Optional time-to-live for the cache entry.
+	 * @returns {Promise<Object>} An object indicating the success of the set and sadd operations.
 	 */
 	async set(key, value, expire, ttl = 0) {
 		if (value === undefined) {
@@ -61,7 +61,6 @@ class Cache {
 		_ttl = Number.isInteger(_ttl) ? _ttl : 0
 
 		const _value = await compress(value, { base64: false })
-		// let args: [string, string, ...unknown[]] = [key, _value]
 		let args = [key, _value]
 
 		if (expire === 'EX' || expire === 'PX') {
@@ -80,14 +79,14 @@ class Cache {
 			.sadd(this.namespace, key)
 			.exec()
 
-		return Boolean(set && sadd)
+		return { set, sadd }
 	}
 
 	/**
 	 * Delete a value from the cache.
 	 *
 	 * @param {string} key - The key of the item to delete.
-	 * @returns {Promise<boolean>} True if the deletion succeeded, otherwise false.
+	 * @returns {Promise<Object>} An object indicating the success of the del and srem operations.
 	 */
 	async delete(key) {
 		const [[, del], [, srem]] = await this.redis
@@ -95,7 +94,7 @@ class Cache {
 			.del(key)
 			.srem(this.namespace, key)
 			.exec()
-		return Boolean(del && srem)
+		return { del, srem }
 	}
 
 	/**

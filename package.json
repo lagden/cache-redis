@@ -1,6 +1,6 @@
 {
   "name": "@tadashi/cache-redis",
-  "version": "7.0.0",
+  "version": "7.0.1",
   "description": "Using redis as cache",
   "keywords": [
     "cache",
@@ -9,11 +9,11 @@
   ],
   "type": "module",
   "main": "./src/cache-redis.js",
-  "types": "./src/types/cache-redis.d.ts",
+  "types": "./types/cache-redis.d.ts",
   "exports": {
     ".": {
       "import": "./src/cache-redis.js",
-      "types": "./src/types/cache-redis.d.ts"
+      "types": "./types/cache-redis.d.ts"
     }
   },
   "files": [
