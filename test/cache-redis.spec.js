@@ -1,20 +1,20 @@
-import {setTimeout} from 'node:timers/promises'
-import {test} from 'node:test'
+import { setTimeout } from 'node:timers/promises'
+import { test } from 'node:test'
 import assert from 'node:assert/strict'
 import Cache from '../src/cache-redis.js'
 
 test('default', async () => {
 	const _a = new Cache()
-	await _a.set('a', {a: 123})
-	const {a} = await _a.get('a')
+	await _a.set('a', { a: 123 })
+	const { a } = await _a.get('a')
 	assert.equal(a, 123)
 	_a.redis.disconnect(false)
 })
 
 test('namespace', async () => {
-	const _a = new Cache({namespace: 'test'})
-	await _a.set('a', {a: 456})
-	const {a} = await _a.get('a')
+	const _a = new Cache({ namespace: 'test' })
+	await _a.set('a', { a: 456 })
+	const { a } = await _a.get('a')
 	assert.equal(a, 456)
 	_a.redis.disconnect(false)
 })
@@ -37,8 +37,8 @@ test('primitive', async () => {
 
 test('ttl PX', async () => {
 	const _d = new Cache()
-	await _d.set('d', {d: 789}, 'PX', 1000)
-	const {d} = await _d.get('d')
+	await _d.set('d', { d: 789 }, 'PX', 1000)
+	const { d } = await _d.get('d')
 	assert.equal(d, 789)
 	await setTimeout(1500)
 	const res = await _d.get('d')
@@ -48,8 +48,8 @@ test('ttl PX', async () => {
 
 test('ttl PXAT', async () => {
 	const _dd = new Cache()
-	await _dd.set('dd', {dd: 789}, 'PXAT', 1000)
-	const {dd} = await _dd.get('dd')
+	await _dd.set('dd', { dd: 789 }, 'PXAT', 1000)
+	const { dd } = await _dd.get('dd')
 	assert.equal(dd, 789)
 	await setTimeout(1500)
 	const res = await _dd.get('dd')
@@ -59,8 +59,8 @@ test('ttl PXAT', async () => {
 
 test('ttl EX', async () => {
 	const _e = new Cache()
-	await _e.set('e', {e: 1011}, 'EX', 1)
-	const {e} = await _e.get('e')
+	await _e.set('e', { e: 1011 }, 'EX', 1)
+	const { e } = await _e.get('e')
 	assert.equal(e, 1011)
 	await setTimeout(2000)
 	const res = await _e.get('e')
@@ -70,8 +70,8 @@ test('ttl EX', async () => {
 
 test('ttl EXAT', async () => {
 	const _f = new Cache()
-	await _f.set('f', {f: 1011}, 'EXAT', 1)
-	const {f} = await _f.get('f')
+	await _f.set('f', { f: 1011 }, 'EXAT', 1)
+	const { f } = await _f.get('f')
 	assert.equal(f, 1011)
 	await setTimeout(2000)
 	const res = await _f.get('f')
@@ -98,8 +98,8 @@ test('delete', async () => {
 			host: 'localhost',
 		},
 	})
-	await _h.set('h', {h: 1516})
-	const {h} = await _h.get('h')
+	await _h.set('h', { h: 1516 })
+	const { h } = await _h.get('h')
 	assert.equal(h, 1516)
 	const _delete = await _h.delete('h')
 	assert.ok(_delete)
@@ -108,10 +108,10 @@ test('delete', async () => {
 
 test('clear', async () => {
 	const _i = new Cache({
-		redis: {keyPrefix: 'unitTestClear'},
+		redis: { keyPrefix: 'unitTestClear' },
 	})
-	await _i.set('i', {i: 1718})
-	const {i} = await _i.get('i')
+	await _i.set('i', { i: 1718 })
+	const { i } = await _i.get('i')
 	assert.equal(i, 1718)
 	const _clear = await _i.clear()
 	assert.equal(_clear, undefined)

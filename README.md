@@ -15,7 +15,7 @@
 [snyk]:            https://snyk.io/test/github/lagden/cache-redis
 
 
-Using Redis as cache
+Making cache with Redis
 
 
 ## Install
@@ -29,33 +29,39 @@ $ npm i @tadashi/cache-redis
 
 ### new Cache( \[opts\])
 
-Name        | Type                 | Default                            | Description
------------ | -------------------- | ---------------------------------- | ------------
-opts        | object               | {namespace: 'cache', redis: {}}    | See bellow
+| parameter | type        | required | default            | description       |
+| --------- | ----------- | -------- | ------------------ | ----------------- |
+| opts      | Object      | no       | [see below](#opts) | Options for configuring the cache. |
 
 
-#### opts.addresses:String
+#### opts
 
-Addresses to connect (separated by commas)
+| parameter      | type             | required | default        | description                             |
+| -------------- | ---------------- | -------- | -------------- | --------------------------------------- |
+| address        | String\|String[] | no       | 127.0.0.1:6379 | The address of the Redis server.        |
+| namespace      | String           | no       | app            | A namespace for the cache keys.         |
+| redisOptions   | Object           | no       | -              | [See configuration options](https://redis.github.io/ioredis/interfaces/CommonRedisOptions.html) |
 
-
-#### opts.namespace:String
-
-The namespace for all cache members
-
-
-#### opts.redis:Object
-
-See [ioredis](https://github.com/luin/ioredis/blob/master/API.md) options
-
----
 
 ### Cluster
 
-To use `Redis.Cluster`, set addresses separated by commas:
+To use `Cluster`, set addresses separated by commas or an array and set [clusterOptions](https://redis.github.io/ioredis/interfaces/ClusterOptions.html).
 
 ```js
-const cache = new Cache({addresses: '127.0.0.1:6379,127.0.0.1:6380,127.0.0.1:6381'})
+import Cache from '@tadashi/cache-redis'
+
+const cache = new Cache({
+  address: '127.0.0.1:6379, 127.0.0.1:6380, 127.0.0.1:6381',
+  // or
+  address: ['127.0.0.1:6379', '127.0.0.1:6380', '127.0.0.1:6381'],
+  // and
+  redisOptions: {
+    clusterOptions: {
+      retryDelayOnClusterDown: 500,
+      // ...
+    }
+  }
+})
 ```
 
 
@@ -65,7 +71,7 @@ const cache = new Cache({addresses: '127.0.0.1:6379,127.0.0.1:6380,127.0.0.1:638
 import Cache from '@tadashi/cache-redis'
 
 const _cache = new Cache({
-  redis: {
+  redisOptions: {
     keyPrefix: 'api'
   },
   namespace: 'example'
@@ -93,10 +99,11 @@ await find('foo')
 // => data from cache
 ```
 
+---
 
-## Donate ❤️
-
-BTC: bc1q7famhuj5f25n6qvlm3sssnymk2qpxrfwpyq7g4
+> [!IMPORTANT]  
+> Buy me a coffee!  
+> BTC: `bc1q7famhuj5f25n6qvlm3sssnymk2qpxrfwpyq7g4`
 
 
 ## License
